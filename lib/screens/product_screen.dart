@@ -10,21 +10,30 @@ class ProductsScreen extends StatefulWidget {
 }
 
 class _ProductsScreenState extends State<ProductsScreen> {
-
   @override
   void initState() {
     context.read<ProductsBloc>().add(ProductsLoadedEvent());
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Products Screen'),
       ),
-      body: BlocBuilder<ProductsBloc, ProductsState>(
+
+      body: BlocConsumer<ProductsBloc, ProductsState>(
+        listener: (context, state) {
+            if(state is ProductsLoadedState) {
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data Loaded')));
+          }
+          else if(state is ProductsErrorState){
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data Not Loaded')));
+          }
+        },
         builder: (context, state) {
-          if (state is ProductsLoadingState) {
+         if (state is ProductsLoadingState) {
             return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
