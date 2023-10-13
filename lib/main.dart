@@ -1,10 +1,12 @@
 import 'package:bloc_pattern_cs_test/bloc/products_bloc.dart';
+import 'package:bloc_pattern_cs_test/debug/bloc_observer.dart';
 import 'package:bloc_pattern_cs_test/repo/products_repo.dart';
 import 'package:bloc_pattern_cs_test/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
+  Bloc.observer = MyBlocObserver();
   runApp(RepositoryProvider(
     lazy: true,
     create: (context) => ProductsRepo(),
