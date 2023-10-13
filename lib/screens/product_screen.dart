@@ -22,18 +22,18 @@ class _ProductsScreenState extends State<ProductsScreen> {
       appBar: AppBar(
         title: const Text('Products Screen'),
       ),
-
       body: BlocConsumer<ProductsBloc, ProductsState>(
         listener: (context, state) {
-            if(state is ProductsLoadedState) {
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data Loaded')));
-          }
-          else if(state is ProductsErrorState){
-                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Data Not Loaded')));
+          if (state is ProductsLoadedState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text('Data Loaded')));
+          } else if (state is ProductsErrorState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(const SnackBar(content: Text('Data Not Loaded')));
           }
         },
         builder: (context, state) {
-         if (state is ProductsLoadingState) {
+          if (state is ProductsLoadingState) {
             return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
@@ -42,7 +42,8 @@ class _ProductsScreenState extends State<ProductsScreen> {
                 itemCount: state.productsModel.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: Text(state.productsModel[index].category.toString()),
+                    leading:
+                        Text(state.productsModel[index].category.toString()),
                   );
                 });
           } else if (state is ProductsErrorState) {
